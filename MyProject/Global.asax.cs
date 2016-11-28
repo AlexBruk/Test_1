@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace MyProject
+namespace Test_1
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -15,6 +15,7 @@ namespace MyProject
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            InjectionConfig.RegisterDependencies();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }

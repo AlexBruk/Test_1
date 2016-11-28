@@ -1,0 +1,29 @@
+﻿@model Test_1.Models.ViewModels.AddStoreKeeperViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <button id="closeModal" class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4 class="modal-title" style="text-align:center">Добавить кладовщика</h4>
+    </div>
+    <div class="modal-body">
+        @using (Ajax.BeginForm("AddStoreKeeper", "StoreKeeper", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AddStoreKeeperSuccess" }))
+        {
+
+            @Html.LabelFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name)
+
+            <button type="submit" id="AddStoreKeeperSubmit" class="btn btn-primary">Добавить</button>
+        }
+    </div>
+</div>
+<script>
+    function AddStoreKeeperSuccess(data) {
+        if (data.success === false) {
+            alertify.error(data.info);
+        } else {
+            alertify.success(data.info);
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        }
+    }
+</script>

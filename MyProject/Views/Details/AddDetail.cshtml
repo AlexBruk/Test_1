@@ -1,0 +1,66 @@
+﻿@model Test_1.Models.ViewModels.AddDetailViewModel
+<div class="modal-content">
+    <div class="modal-header">
+        <button id="closeModal" class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h4 class="modal-title" style="text-align:center">Добавить деталь</h4>
+    </div>
+    <div class="modal-body">
+        @using (Ajax.BeginForm("AddDetail", "Details", new AjaxOptions { HttpMethod = "POST", OnSuccess = "addDetailSuccess" }))
+        { <div class="editor-label">
+                @Html.LabelFor(model => model.StoreKeepers)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(x => x.SelectedStoreKeeperId, Model.StoreKeepers, "-- Выберите кладовщика -- ", new { @class = "eField" })
+            </div>
+            <div class="editor-label eLabel">
+                @Html.LabelFor(model => model.Code, "Номенклатурный код")
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Code, new { @class = "eField" })
+            </div>
+            <div class="editor-label eLabel">
+                @Html.LabelFor(model => model.Count, "Количество деталей")
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Count, new { @class = "eField" })
+            </div>
+                <div class="editor-label eLabel">
+                    @Html.LabelFor(model => model.Name, "Название")
+                </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "eField" })
+                    </div>
+                    <div class="editor-label eLabel">
+                        @Html.LabelFor(model => model.DateAdded, "Дата добавления")
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.DateAdded)
+                    </div>
+                    <div class="editor-label eLabel">
+                        @Html.LabelFor(model => model.Special, "Особоучитываемая")
+                        @Html.CheckBoxFor(model => model.Special, new { style = "vertical-align:top;margin-left:20px;" })
+                    </div>
+
+
+                    <button type="submit" id="addDetailSubmit" class="btn btn-primary">Добавить</button>
+        }
+    </div>
+</div>
+<script>
+    function addDetailSuccess(data) {
+        if (data.success === false) {
+            alertify.error(data.info);
+        } else {
+            alertify.success(data.info);
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        }
+    }
+
+    $(document).ready(function () {
+        $('.date').datepicker({ dateFormat: "dd.mm.yy" });
+        $(".date").datepicker("option", $.datepicker.regional["ru"]);
+    });
+
+</script>

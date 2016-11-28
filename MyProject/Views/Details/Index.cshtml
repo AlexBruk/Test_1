@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Детали";
+    AjaxOptions options = new AjaxOptions
+    {
+        UpdateTargetId = "searchRes",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+<div class="main">
+    <div id="modDialog" class="modal fade">
+        <div id="dialogContent" class="modal-dialog">
+        </div>
+    </div>
+    
+    <div class="box">
+        <div id="addDetail" class="btn">
+            Добавить деталь
+        </div>
+            @using (Ajax.BeginForm("SearchDetails", options))
+            {
+                <div style="float:right;">
+                    @Html.TextBox("keyword")
+                    <button class="btn" type="submit" style="background-color:#5bc0de;color:white">Искать!</button>
+                </div>
+            }
+        </div>
+
+    <div style="padding-top:40px">
+        <div class="panel panel-default">
+            <table class="table">
+                <colgroup>
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 5%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Название</th>
+                        <th align="center">Количество</th>
+                        <th>Особоучитываемая</th>
+                        <th>Дата добавления</th>
+                        <th>Кладовщик</th>
+                        <th>Удалить</th>
+                    </tr>
+                </thead>
+                <tbody id="searchRes">
+                    @Html.Action("SearchDetails", new { keyword = "" })
+                </tbody>
+            </table>
+
+            </div>
+        </div>
+</div>
+
+
+<script>
+
+    $('#addDetail').click(function () {
+        var url = '@Url.Action("AddDetail", "Details")';
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            }
+        });
+    });
+
+</script>

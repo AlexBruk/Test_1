@@ -15,10 +15,47 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+.main{
+    padding-left:200px;
+    padding-right:200px;
+}
+.eField{
+    width: 200px; 
+}
+.eLabel{
+    padding-top:10px;
+}
+.box{
+     margin:auto;
+     padding-top:20px;
+}
+#addDetail{
+    float:left;
+    text-align:center;
+    color:white;
+    text-decoration:none;
+    background-color:#5bc0de;
+}
+#Export{
+    margin-left:10px;
+    float:left;
+    text-align:center;
+    background-color:#5bc0de;
+    color:white;
+    text-decoration:none;
+}
 
+#AddStoreKeeper{
+    float:left;
+    text-align:center;
+    color:white;
+    text-decoration:none;
+    background-color:#5bc0de;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
 }
+

@@ -1,0 +1,49 @@
+﻿@model Test_1.Models.ViewModels.DetailsViewModel
+@foreach (var detail in Model.Details)
+{
+    <tr>
+        <td>@detail.Code</td>
+        <td>@detail.Name</td>
+        <td>@detail.Count</td>
+        <td align="center">
+            @if (detail.Special == true)
+            {
+                <i class="fa fa-check-square">
+                </i>
+            }
+        </td>
+        <td>@detail.DateAdded.ToShortDateString()</td>
+        <td>@detail.StoreKeeperName</td>
+        <td>
+            <div class="deleteDetail btn btn-info btn-sm" data-id="@detail.Id" style="width: 100%">
+                Удалить
+            </div>
+        </td>
+    </tr>
+}
+<script>
+    $('.deleteDetail').click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        alertify.confirm("Вы действительно хотите удалить деталь?", function (e) {
+            if (e) {
+                var url = '@Url.Action("Delete","Details")';
+                $.ajax({
+                    url: url,
+                    data: { "id": id },
+                    method: "POST",
+                    success: function (data) {
+                        if (data.success === false) {
+                            alertify.error(data.info);
+                        } else {
+                            alertify.success(data.info);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,86 @@
+﻿@model Test_1.Models.ViewModels.StorekeeperViewModel
+@{
+    ViewBag.Title = "Кладовщики";
+}
+<div class="main">
+    <div id="modDialog" class="modal fade">
+        <div id="dialogContent" class="modal-dialog">
+
+        </div>
+    </div>
+    <div class="box">
+        <div id="AddStoreKeeper" class="btn">
+            Добавить кладовщика
+        </div>
+    <div style="padding-top:50px;">
+
+        <div class="panel panel-default">
+            <table class="table">
+                <colgroup>
+                    <col span="1" style="width: 55%;">
+                    <col span="1" style="width: 40%;">
+                    <col span="1" style="width: 5%;">
+                </colgroup>
+                <tr>
+                    <th>Кладовщик</th>
+                    <th>Количество деталей</th>
+                    <th>Удалить</th>
+                </tr>
+                @foreach (var SK in Model.Storekeepers)
+            {
+                    <tr>
+                        <td>@SK.Name</td>
+
+                        <td>@SK.DetailsCount</td>
+
+                        <td>
+                            <div class="deleteSk btn btn-info btn-sm" data-id="@SK.Id" style="width: 100%">
+                                Удалить
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            </div>
+            
+        </div>
+</div>
+
+<script>
+    $('#AddStoreKeeper').click(function () {
+        var url = '@Url.Action("AddStoreKeeper", "StoreKeeper")';
+        $.ajax({
+            url: url,
+            success: function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
+            }
+        });
+    });
+    $('.deleteSk').click(function () {
+        var id = $(this).data("id");
+        console.log(id);
+        alertify.confirm("Вы действительно хотите удалить кладовщика?", function (e) {
+            if (e) {
+                var url = '@Url.Action("Delete","StoreKeeper")';
+                $.ajax({
+                    url: url,
+                    data: { "id": id },
+                    method: "POST",
+                    success: function (data) {
+                        if (data.success === false) {
+                            alertify.error(data.info);
+                        } else {
+                            alertify.success(data.info);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
